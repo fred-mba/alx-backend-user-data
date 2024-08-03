@@ -7,5 +7,7 @@
 4. How to authenticate to a database using environment variables
 
 ### Resources
-- [Logging Basics](https://youtu.be/-ARI4Cz-awo?si=Y_rwql3Cm6GT3w9n)
+- [Logging to Files, Setting Levels, and Formatting](https://youtu.be/-ARI4Cz-awo?si=Y_rwql3Cm6GT3w9n)
 - [Logging Advanced](https://youtu.be/-ARI4Cz-awo?si=Q4hERN7bYoNuDRKV)
+- [bcrypt package](https://github.com/pyca/bcrypt/)
+- [Logging documentation](https://docs.python.org/3/library/logging.html)
