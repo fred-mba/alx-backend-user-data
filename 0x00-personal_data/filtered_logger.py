@@ -2,11 +2,10 @@
 """
 Filter datum module
 """
-import logging
 import os
 import re
+import logging
 import mysql.connector
-from mysql.connector import connection
 from typing import List
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
