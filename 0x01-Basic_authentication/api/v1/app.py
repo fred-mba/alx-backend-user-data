@@ -28,7 +28,7 @@ if __name__ == "__main__":
 
 
 @app.errorhandler(404)
-def unathorized_error() -> None:
+def unathorized_error(error) -> str:
     """Error handler
     """
     reponse = jsonify({"error": "Unauthorized"})
