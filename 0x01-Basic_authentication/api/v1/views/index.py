@@ -28,6 +28,15 @@ def stats() -> str:
 
 @app_views.route('/unauthorized/', strict_slashes=False)
 def unauthorized() -> None:
-    """Return unathorized error
+    """ - The endpoint must raise a 401 error by using abort
+        - By calling abort(401), the error handler for 401 will be executed.
     """
     abort(401)
+
+
+@app_views.route('/forbidden/', strict_slashes=False)
+def forbidden() -> None:
+    """ - The endpoint must raise a 403 error by using abort
+        - By calling abort(403), the error handler for 403 will be executed.
+    """
+    abort(403)
