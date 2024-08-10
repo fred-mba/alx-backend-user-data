@@ -81,7 +81,7 @@ class BasicAuth(Auth):
         Returns the User instance based on his email and password if
         successfull, None if it fails
         """
-        if type(user_email) == str and type(user_pwd) == str:
+        if isinstance(user_email, str) and isinstance(user_pwd, str):
             try:
                 user = User.search({'email': user_email})
 
