@@ -16,7 +16,13 @@ auth = None
 
 auth_type = getenv('AUTH_TYPE')
 
-if auth_type == 'auth':
+# If  auth type is basic_auth, import BasicAuth and create instanve of it
+if auth_type == 'basic_auth':
+    from api.v1.auth.basic_auth import BasicAuth
+    auth = BasicAuth()
+
+# Otherwise, follow the previous mechanism by creating instance of `Auth`
+elif auth_type == 'auth':
     from api.v1.auth.auth import Auth
     auth = Auth()
 
