@@ -35,6 +35,7 @@ class Auth():
 
             if excluded_path.endswith('*'):
                 return False
+            return True
 
         return True
 
