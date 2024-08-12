@@ -3,7 +3,7 @@
 """
 import os
 from api.v1.auth.session_auth import SessionAuth
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class SessionExpAuth(SessionAuth):
