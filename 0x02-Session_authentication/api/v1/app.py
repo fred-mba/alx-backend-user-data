@@ -16,8 +16,11 @@ auth = None
 
 auth_type = getenv('AUTH_TYPE')
 
+if auth_type == 'session_exp_auth':
+    from api.v1.auth.session_exp_auth import SessionExpAuth
+    auth = SessionExpAuth()
 # If  auth type is session_auth, import SessionAuth and create instance of it
-if auth_type == 'session_auth':
+elif auth_type == 'session_auth':
     from api.v1.auth.session_auth import SessionAuth
     auth = SessionAuth()
 
