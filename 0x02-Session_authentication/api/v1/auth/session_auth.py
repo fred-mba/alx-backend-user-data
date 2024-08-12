@@ -4,6 +4,7 @@ Session Authentication Module
 """
 import uuid
 from api.v1.auth.auth import Auth
+from models.user import User
 
 
 class SessionAuth(Auth):
@@ -34,3 +35,21 @@ class SessionAuth(Auth):
             return None
 
         return self.user_id_by_session_id.get(session_id)
+
+    def current_user(self, request=None) -> User:
+        """Returns a User instance based on a cookie value
+           Parameter
+           --------
+           request: Will contain the session_cookie ID. It will use this
+           to identify the user.
+           Steps:
+           1. Request the session_id from the cookie
+           2. Retrieve the user_id from the session_id
+           3. Retrieve thr user instance from the db using user_id
+        """
+        session_id = self.session_cookie(request)
+
+        user_id = self.user_id_for_session_id(session_id)
+
+        user = User.get(user_id)
+        return user
