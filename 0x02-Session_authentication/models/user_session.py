@@ -7,6 +7,8 @@ from models.base import Base
 class UserSession(Base):
     """Stores all session_id in 'database'.
     """
+
+
 def __init__(self, *args: list, **kwargs: dict):
     """Initialize UserSession instance.
     """
