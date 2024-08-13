@@ -1,4 +1,4 @@
-"""DB module.
+"""DB module
 """
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -23,6 +23,7 @@ class DB:
     @property
     def _session(self) -> Session:
         """Memoized session object.
+           Used to add new user and commit th transaction.
         """
         if self.__session is None:
             DBSession = sessionmaker(bind=self._engine)
