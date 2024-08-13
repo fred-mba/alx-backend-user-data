@@ -14,16 +14,13 @@ class SessionDBAuth(SessionExpAuth):
         """Create and store session in the db.
         """
         session_id = super().create_session(user_id)
-        if type(session_id) == str:
-            kwargs = {
-                'user_id': user_id,
-                'session_id': session_id
-            }
+        if session_id is None:
+            return None
+        user_session = UserSession(
+            'user_id': user_id, 'session_id': session_id)
+        user_session.save()
 
-            user_session = UserSession(**kwargs)
-            user_session.save()
-
-            return session_id
+        return session_id
 
     def user_id_for_session_id(self, session_id=None):
         """Retrieve the user_id based on the session ID stored in the db.
