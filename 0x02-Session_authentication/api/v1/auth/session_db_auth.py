@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Sessions in database
 """
+from flask import request
 from api.v1.auth.session_exp_auth import SessionExpAuth
 from models.user_session import UserSession
 from datetime import datetime, timedelta
@@ -13,7 +14,7 @@ class SessionDBAuth(SessionExpAuth):
         """Create and store session in the db.
         """
         session_id = super().create_session(user_id)
-        if isinstance(session_id, str):
+        if type(session_id) == str:
             kwargs = {
                 'user_id': user_id,
                 'session_id': session_id
@@ -44,16 +45,12 @@ class SessionDBAuth(SessionExpAuth):
     def destroy_session(self, request=None):
         """Destroy user_session from the db based on the session ID.
         """
-        if request is None:
-            return None
-
         session_id = self.session_cookie(request)
-        if session_id is None:
+        try:
+            user_session = UserSession.search({"session_id": session_id})
+        except Exception:
             return False
-
-        user_session = UserSession.search({"session_id": session_id})
-        if not user_session:
+        if len(user_session) <= 0:
             return False
-
-        user_session.remove()
+        user_session[0].remove()
         return True
