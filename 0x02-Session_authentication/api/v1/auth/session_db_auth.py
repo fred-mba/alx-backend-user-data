@@ -28,7 +28,7 @@ class SessionDBAuth(SessionExpAuth):
         """Retrieve the user_id based on the session ID stored in the db.
         """
         try:
-            user_session = UserSession.search({"session_id": session_id})
+            user_session = UserSession.search({'session_id': session_id})
         except Exception:
             return None
         if len(user_session) <= 0:
@@ -41,7 +41,7 @@ class SessionDBAuth(SessionExpAuth):
             return None
         return user_session[0].user_id
 
-    def destroy_session(self, request=None):
+    def destroy_session(self, request=None) -> bool:
         """Destroy user_session from the db based on the session ID.
         """
         session_id = self.session_cookie(request)
