@@ -2,7 +2,7 @@
 """Basic flask app module
 """
 from user import User
-from flask import Flask, request, jsonify, make_response, abort
+from flask import Flask, request, jsonify, make_response, abort, redirect
 from auth import Auth
 
 
@@ -51,6 +51,22 @@ def login():
     response.set_cookie("session_id", session_id)
 
     return response
+
+
+@app.rout('/sessions', methods=['DELETE'])
+def logout():
+    """Find the user with the requested session ID. If the user exists destroy
+       the session and redirect the user to GET /. Otherwise respond with a 403
+       HTTP status.
+    """
+    session_id = request.cookies.get('session_id')
+    user = AUTH.get_user_from_session_id(session_id)
+    if user is None:
+        abort(403)
+    AUTH.destroy_session(user.id)
+
+    # Create a redirection response to home page
+    return redirect('/')
 
 
 if __name__ == "__main__":
