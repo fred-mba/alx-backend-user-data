@@ -10,12 +10,12 @@ app = Flask(__name__)
 AUTH = Auth()
 
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET'], strict_slashes=False)
 def basic_flask():
     return jsonify({"message": "Bienvenue"})
 
 
-@app.route('/users', methods=['POST'])
+@app.route('/users', methods=['POST'], strict_slashes=False)
 def users():
     """An end-point to register a new user
     """
@@ -30,7 +30,7 @@ def users():
         return jsonify({"message": "email already registered"}), 400
 
 
-@app.route('/sessions', methods=['POST'])
+@app.route('/sessions', methods=['POST'], strict_slashes=False)
 def login():
     """Logs in the user by validating credentials before creating a session
        for the user, and store session ID as a cookie with key "session_id"
@@ -53,20 +53,18 @@ def login():
     return response
 
 
-@app.rout('/sessions', methods=['DELETE'])
+@app.rout('/sessions', methods=['DELETE'], strict_slashes=False)
 def logout():
     """Find the user with the requested session ID. If the user exists destroy
        the session and redirect the user to GET /. Otherwise respond with a 403
        HTTP status.
     """
-    session_id = request.cookies.get('session_id')
+    session_id = request.cookies.get("session_id")
     user = AUTH.get_user_from_session_id(session_id)
     if user is None:
         abort(403)
     AUTH.destroy_session(user.id)
-
-    # Create a redirection response to home page
-    return redirect('/')
+    return redirect("/")
 
 
 if __name__ == "__main__":
