@@ -26,6 +26,7 @@ class Auth:
            and return a User object.
         Raise:
             ValueError: If a user already exist with the passed email
+            NoResultFound:
         """
         try:
             self._db.find_user_by(email=email)
@@ -36,3 +37,21 @@ class Auth:
             new_user = self._db.add_user(
                 email=email, hashed_password=hashed_pwd)
             return new_user
+
+    def valid_login(self, email: str, password: str) -> bool:
+        """Verifies user's credentials and return True if it matches,
+           Otherwise False
+
+           Parameters
+           ----------
+           password: The plaintext password to be verified.
+           email: email to relocate the user
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+            if bcrypt.checkpw(password.encode('utf-8'), user.hashed_password):
+                return True
+            else:
+                return False
+        except NoResultFound:
+            return False
