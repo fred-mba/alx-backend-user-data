@@ -72,4 +72,5 @@ class DB:
                     raise InvalidRequestError
             self._session.commit()
         except ValueError:
+            self._session.rollback()
             raise
