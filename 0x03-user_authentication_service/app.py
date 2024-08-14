@@ -4,11 +4,12 @@
 from flask import Flask, jsonify
 
 
-app = Flask(__name___)
+app = Flask(__name__)
 
 
-@app.route('/')
-return jsonify({"message": "Bienvenue"})
+@app.route('/', methods=['GET'])
+def basic_flask():
+    return jsonify({"message": "Bienvenue"})
 
 
 if __name__ == "__main__":
