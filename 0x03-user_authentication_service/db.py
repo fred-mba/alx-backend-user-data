@@ -62,15 +62,11 @@ class DB:
         """Takes as argument a required user_id integer and arbitrary
            keyword arguments, and returns None
         """
-        try:
-            user = self._session.query(User).filter_by(id=user_id).one()
+        user = self._session.query(User).filter_by(id=user_id).one()
 
-            for key, value in kwargs.items():
-                if hasattr(user, key):
-                    setattr(user, key, value)
-                else:
-                    raise InvalidRequestError
-            self._session.commit()
-        except ValueError:
-            self._session.rollback()
-            raise
+        for key, value in kwargs.items():
+            if hasattr(user, key):
+                setattr(user, key, value)
+            else:
+                raise ValueError()
+        self._session.commit()
