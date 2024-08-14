@@ -12,6 +12,8 @@ AUTH = Auth()
 
 @app.route('/', methods=['GET'], strict_slashes=False)
 def home() -> str:
+    """Homepage placeholder
+    """
     return jsonify({"message": "Bienvenue"})
 
 
@@ -53,7 +55,7 @@ def login() -> str:
     return response
 
 
-@app.rout('/sessions', methods=['DELETE'], strict_slashes=False)
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
 def logout() -> str:
     """Find the user with the requested session ID. If the user exists destroy
        the session and redirect the user to GET /. Otherwise respond with a 403
