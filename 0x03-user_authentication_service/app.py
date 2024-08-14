@@ -11,12 +11,12 @@ AUTH = Auth()
 
 
 @app.route('/', methods=['GET'], strict_slashes=False)
-def basic_flask():
+def home() -> str:
     return jsonify({"message": "Bienvenue"})
 
 
 @app.route('/users', methods=['POST'], strict_slashes=False)
-def users():
+def users() -> str:
     """An end-point to register a new user
     """
     email = request.form.get('email')
@@ -31,7 +31,7 @@ def users():
 
 
 @app.route('/sessions', methods=['POST'], strict_slashes=False)
-def login():
+def login() -> str:
     """Logs in the user by validating credentials before creating a session
        for the user, and store session ID as a cookie with key "session_id"
        on the response and a JSON payload form.
@@ -54,7 +54,7 @@ def login():
 
 
 @app.rout('/sessions', methods=['DELETE'], strict_slashes=False)
-def logout():
+def logout() -> str:
     """Find the user with the requested session ID. If the user exists destroy
        the session and redirect the user to GET /. Otherwise respond with a 403
        HTTP status.
