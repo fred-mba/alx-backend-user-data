@@ -127,4 +127,4 @@ class Auth:
         user.hashed_password = hashed_password
         user.reset_token = None
 
-        self._db_session.commit()
+        self._db._session.commit()
