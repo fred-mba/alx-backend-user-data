@@ -87,14 +87,11 @@ def get_reset_password_token() -> str:
        respond with a 403 status code.
     """
     email = request.form.get('email')
-    reset_token = None
     try:
-        reset_token = AUTH.get_reset_token(email)
+        reset_token = AUTH.get_reset_password_token(email)
     except ValueError:
-        reset_token = None
-    if reset_token is None:
         abort(403)
-    return jsonify({"email": email, "reset_token": reset_token})
+    return jsonify({"email": email, "reset_token": reset_token}), 200
 
 
 if __name__ == "__main__":
