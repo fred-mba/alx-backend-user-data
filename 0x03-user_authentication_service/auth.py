@@ -9,7 +9,7 @@ from sqlalchemy.orm.exc import NoResultFound
 
 
 def _hash_password(password: str) -> bytes:
-    """Takes in a password string arguments and returns bytes
+    """Take in a password string arguments and return bytes
     """
     hashed_pwd = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
     return hashed_pwd
@@ -29,7 +29,7 @@ class Auth:
         self._db = DB()
 
     def register_user(self, email: str, password: str) -> User:
-        """Registers a new_user with the given email and password arguments
+        """Register a new_user with the given email and password arguments
            and return a User object.
         Raise:
             ValueError: If a user already exist with the passed email
@@ -46,7 +46,7 @@ class Auth:
             return new_user
 
     def valid_login(self, email: str, password: str) -> bool:
-        """Verifies user's credentials and return True if it matches,
+        """Validate the user's credentials and return True if it matches,
            Otherwise False
 
            Parameters
@@ -64,9 +64,9 @@ class Auth:
             return False
 
     def create_session(self, email: str) -> str:
-        """Takes an email string argument and returns the session ID
+        """Take an email string argument and return the session ID
            as a string.
-           Finds the user corresponding to the email and generates a new UUID,
+           Find the user corresponding to the email and generates a new UUID,
            stores it in the db as the user's session_id.
         """
         try:
@@ -92,8 +92,23 @@ class Auth:
         return user
 
     def destroy_session(self, user_id: int) -> None:
-        """Deletes a session based on user_id by setting session_id to None.
+        """Delete a session based on user_id by setting session_id to None.
         """
         if user_id is None:
             return None
         self._db.update_user(user_id, session_id=None)
+
+    def get_reset_password_token(self, email: str) -> str:
+        """Generate a reset password token by finding the user corresponding
+           to the email. If the user exist, generate a UUID and update the
+           user's reset_token db field
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+            reset_token = _generate_uuid()
+            user.reset_token = reset_token
+            self._db._session.commit()
+
+            return reset_token
+        except NoResultFound:
+            raise ValueError
