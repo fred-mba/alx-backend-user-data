@@ -24,7 +24,7 @@ def _generate_uuid() -> str:
 def _check_pwd(password: str, hashed_password: bytes) -> bool:
     """Return True if plaintext password match hashed password
     """
-    return bycrypt.checkpw(password.encode('utf-8'), hashed_password)
+    return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
 
 
 class Auth:
