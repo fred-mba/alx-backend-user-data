@@ -43,6 +43,8 @@ class Auth:
             hashed_pwd = _hash_password(password)
             new_user = self._db.add_user(
                 email=email, hashed_password=hashed_pwd)
+            self._db._session.commit()
+
             return new_user
 
     def valid_login(self, email: str, password: str) -> bool:
