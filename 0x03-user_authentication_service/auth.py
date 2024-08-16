@@ -21,6 +21,12 @@ def _generate_uuid() -> str:
     return str(uuid.uuid4())
 
 
+def _check_pwd(password: str, hashed_password: bytes) -> bool:
+    """Return True if plaintext password match hashed password
+    """
+    return bycrypt.checkpw(password.encode('utf-8'), hashed_password)
+
+
 class Auth:
     """Auth class to interact with the authentication database.
     """
@@ -56,8 +62,7 @@ class Auth:
         """
         try:
             user = self._db.find_user_by(email=email)
-            return bcrypt.checkpw(
-                password.encode('utf-8'), user.hashed_password)
+            return _check_pwd(password, user.hashed_password)
         except NoResultFound:
             return False
 
