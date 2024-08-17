@@ -36,18 +36,21 @@ class DB:
     def add_user(self, email: str, hashed_password: str) -> User:
         """Saves the user to the database
         """
+        new_user = User(email=email, hashed_password=hashed_password)
         try:
-            new_user = User(email=email, hashed_password=hashed_password)
             self._session.add(new_user)
             self._session.commit()
         except Exception:
             self._session.rollback()
-            new_user = None
         return new_user
 
     def find_user_by(self, **kwargs) -> User:
         """Takes in arbitrary keyword arguments and returns the first row
            found in the users table.
+
+           Raises:
+              NoResultFound: If no user is found with the provided ID.
+              InvalidRequestError: If an invalid field is provided.
         """
         try:
             user = self._session.query(User).filter_by(**kwargs).first()
